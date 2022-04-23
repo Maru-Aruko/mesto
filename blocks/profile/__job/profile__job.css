@@ -1,4 +1,4 @@
-.profile__job{
+.profile__job {
     font-family: "Inter", Arial, sans-serif;
     font-weight: 400;
     font-size: 18px;
@@ -6,8 +6,9 @@
     margin: 0;
 }
 
+
 @media screen and (max-width: 400px) {
-    .profile__job{
+    .profile__job {
         font-size: 14px;
         line-height: 17px;
         text-align: center;

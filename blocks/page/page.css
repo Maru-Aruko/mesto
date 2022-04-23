@@ -5,10 +5,11 @@
     margin: 45px auto 60px;
 }
 
-@media screen and (max-width: 984px) {
-    .page {
-        padding: 0 20px;
-    }
+@media screen and (max-width: 930px){
+.page {
+    box-sizing: border-box;
+    padding: 0 19px;
+}
 }
 
 @media screen and (max-width: 400px){
