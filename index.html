@@ -14,9 +14,9 @@
     <section class="profile">
         <div class="profile__avatar"></div>
         <div class="profile__info">
-            <h1 class="profile__name">Жак-Ив Кусто</h1>
-            <button class="profile__edit-button button" type="button"></button>
-            <p class="profile__job">Исследователь океана</p>
+            <h1 class="profile__name" id="name">Жак-Ив Кусто</h1>
+            <button class="profile__edit-button button" type="button" id="editButton"></button>
+            <p class="profile__job" id="job">Исследователь океана</p>
         </div>
         <button class="profile__add-button button" type="button"></button>
     </section>
@@ -64,9 +64,21 @@
             </figcaption>
         </figure>
     </section>
+    <section class="popup" id="popup">
+        <form class="popup__container" id="form">
+            <button class="popup__close-button button" type="button" id="closeButton"></button>
+            <h4 class="popup__title">Редактировать профиль</h4>
+            <label class="popup__form">
+                <input class="popup__info" id="nameInput" name="name-input" placeholder="Ваше имя" value="Жак-Ив Кусто">
+                <input class="popup__info" id="jobInput" name="job-input" placeholder="О себе" value="Исследователь океана">
+            </label>
+            <button class="popup__save-button button" type="submit">Сохранить</button>
+        </form>
+    </section>
 </main>
 <footer class="footer">
     <p class="footer__copyright">&copy; 2022 Mesto Russia</p>
 </footer>
+<script src="script.js"></script>
 </body>
 </html>

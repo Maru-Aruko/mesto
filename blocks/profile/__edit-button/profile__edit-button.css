@@ -4,9 +4,7 @@
     height: 24px;
     background-repeat: no-repeat;
     background-size: cover;
-    background-color: unset;
     border: 1px #FFFFFF;
-    cursor: pointer;
 }
 
 @media screen and (max-width: 400px) {
