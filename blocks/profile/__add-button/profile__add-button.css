@@ -1,4 +1,4 @@
-.profile__add-button{
+.profile__add-button {
     background-image: url("../../../images/AddButton.png");
     display: flex;
     margin-left: auto;
@@ -9,7 +9,7 @@
 }
 
 @media screen and (max-width: 685px) {
-    .profile__add-button{
+    .profile__add-button {
         background-image: url("../../../images/AddButtonMobile.png");
         min-width: 282px;
         margin: 36px 0 0 0;

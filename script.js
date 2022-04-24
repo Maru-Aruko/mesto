@@ -28,6 +28,7 @@ function openPopup() {
 function closePopup() {
     popup.classList.remove("popup_opened");
 }
+
 //сброс input-ов в первоначальное состояние
 function initForm() {
     let name = nameElement.textContent;

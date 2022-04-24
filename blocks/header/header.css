@@ -7,7 +7,7 @@
 }
 
 
-@media screen and (max-width: 400px){
+@media screen and (max-width: 400px) {
     .header {
         margin: 0;
         padding: 0 0 31px 27px;
