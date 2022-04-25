@@ -1,16 +1,3 @@
-let likeButtons = document.querySelectorAll(".card__like-button");
-
-function clickLike(button) {
-    button.classList.toggle("card__like-button_active");
-}
-
-for (let i = 0; i < likeButtons.length; i++) {
-    likeButtons[i].addEventListener("click", function (event) {
-        let button = event.target;
-        clickLike(button);
-    });
-}
-
 let popup = document.getElementById("popup");
 let editButton = document.getElementById("editButton");
 let closeButton = document.getElementById("closeButton");
@@ -23,6 +10,7 @@ let jobElement = document.querySelector("#job");
 
 function openPopup() {
     popup.classList.add("popup_opened");
+    initForm();
 }
 
 function closePopup() {
@@ -37,11 +25,8 @@ function initForm() {
     jobInput.value = job;
 }
 
-editButton.addEventListener("click", openPopup);
-
 closeButton.addEventListener("click", function () {
     closePopup();
-    initForm();
 });
 
 function formSubmitHandler(evt) {
@@ -52,7 +37,7 @@ function formSubmitHandler(evt) {
     jobElement.textContent = job;
     closePopup();
 }
-
+editButton.addEventListener("click", openPopup);
 formElement.addEventListener("submit", formSubmitHandler);
 
 

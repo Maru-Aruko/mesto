@@ -1,5 +1,5 @@
 .profile__add-button {
-    background-image: url("../../../images/AddButton.png");
+    background-image: url("../../../images/AddButton.svg");
     display: flex;
     margin-left: auto;
     width: 150px;
@@ -10,9 +10,13 @@
 
 @media screen and (max-width: 685px) {
     .profile__add-button {
-        background-image: url("../../../images/AddButtonMobile.png");
+        background-image: url("../../../images/AddButtonMobile.svg");
         min-width: 282px;
         margin: 36px 0 0 0;
 
     }
+}
+
+.profile__add-button:hover {
+    opacity: 0.6;
 }

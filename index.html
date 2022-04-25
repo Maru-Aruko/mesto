@@ -12,7 +12,7 @@
 </header>
 <main class="page__content">
     <section class="profile">
-        <div class="profile__avatar"></div>
+        <img class="profile__avatar" src="././images/Avatar.png" alt="Аватар профиля">
         <div class="profile__info">
             <h1 class="profile__name" id="name">Жак-Ив Кусто</h1>
             <button class="profile__edit-button button" type="button" id="editButton"></button>
@@ -64,21 +64,21 @@
             </figcaption>
         </figure>
     </section>
-    <section class="popup" id="popup">
-        <form class="popup__container" id="form">
-            <button class="popup__close-button button" type="button" id="closeButton"></button>
-            <h4 class="popup__title">Редактировать профиль</h4>
-            <div class="popup__form">
-                <input class="popup__info" id="nameInput" name="name-input" placeholder="Ваше имя" value="Жак-Ив Кусто">
-                <input class="popup__info" id="jobInput" name="job-input" placeholder="О себе" value="Исследователь океана">
-            </div>
+</main>
+<div class="popup" id="popup">
+    <div class="popup__container" id="form">
+        <button class="popup__close-button button" type="button" id="closeButton"></button>
+        <h2 class="popup__title">Редактировать профиль</h2>
+        <form class="popup__form" name="popup__form">
+            <input class="popup__info" id="nameInput" name="name-input" placeholder="Ваше имя" value="Жак-Ив Кусто">
+            <input class="popup__info" id="jobInput" name="job-input" placeholder="О себе" value="Исследователь океана">
             <button class="popup__save-button button" type="submit">Сохранить</button>
         </form>
-    </section>
-</main>
+    </div>
+</div>
 <footer class="footer">
     <p class="footer__copyright">&copy; 2022 Mesto Russia</p>
 </footer>
-<script src="script.js"></script>
+<script src="script/script.js"></script>
 </body>
 </html>
