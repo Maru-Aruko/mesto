@@ -1,68 +1,88 @@
-let popupProfile = document.getElementById("popupProfile");
-let editButton = document.getElementById("editButton");
-let closeButtonProfile = document.getElementById("closeButtonProfile");
-let formElementProfile = document.getElementById("formProfile");
-let nameInput = document.getElementById("nameInput");
-let jobInput = document.getElementById("jobInput");
-let addButton = document.getElementById("addButton");
-let popupAddPlace = document.getElementById("popupAddPlace");
-let closeButtonAdd = document.getElementById("closeButtonAdd");
-let formElementAddPlace = document.getElementById("formAddPlace");
-let placeNameInput = document.getElementById("placeNameInput");
-let placeLinkInput = document.getElementById("placeLinkInput");
+const popupProfile = document.getElementById("popupProfile");
+const editButton = document.getElementById("editButton");
+const closeButtonProfile = document.getElementById("closeButtonProfile");
+const formElementProfile = document.getElementById("formProfile");
+const nameInput = document.getElementById("nameInput");
+const jobInput = document.getElementById("jobInput");
+const addButton = document.getElementById("addButton");
+const popupAddPlace = document.getElementById("popupAddPlace");
+const closeButtonAdd = document.getElementById("closeButtonAdd");
+const formElementAddPlace = document.getElementById("formAddPlace");
+const placeNameInput = document.getElementById("placeNameInput");
+const placeLinkInput = document.getElementById("placeLinkInput");
+const popupImg = document.getElementById("popupImg");
+const popupImgElement = popupImg.querySelector(".popup__img");
+const closeButtonImg = document.getElementById("closeButtonImg");
 
-let nameElement = document.getElementById("name");
-let jobElement = document.getElementById("job");
+const nameElement = document.getElementById("name");
+const jobElement = document.getElementById("job");
 
-
-
-const initialCards = [
-  {
-    name: 'Архыз',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-  },
-  {
-    name: 'Челябинская область',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-  },
-  {
-    name: 'Иваново',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-  },
-  {
-    name: 'Камчатка',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-  },
-  {
-    name: 'Холмогорский район',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-  },
-  {
-    name: 'Байкал',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-  }
-];
 const cardsContainer = document.querySelector(".cards");
 const cardsTemplate = document.querySelector("#cards").content;
 
 
+const initialCards = [
+    {
+        name: 'Архыз',
+        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
+    },
+    {
+        name: 'Челябинская область',
+        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
+    },
+    {
+        name: 'Иваново',
+        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
+    },
+    {
+        name: 'Камчатка',
+        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
+    },
+    {
+        name: 'Холмогорский район',
+        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
+    },
+    {
+        name: 'Байкал',
+        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
+    }
+];
+
+function clickLike(button) {
+    button.classList.toggle("card__like-button_active");
+}
+
+function createCard({name, link}) {
+    const cardElement = cardsTemplate
+        .querySelector(".card")
+        .cloneNode(true);
+    cardElement.querySelector(".card__name").textContent = name;
+    cardElement.querySelector(".card__img").src = link;
+    cardElement.querySelector(".card__img").alt = name;
+
+    const likeButton = cardElement.querySelector(".card__like-button");
+    likeButton.addEventListener("click", function () {
+        clickLike(likeButton)
+    });
+
+    const deleteButton = cardElement.querySelector(".card__delete-button");
+    deleteButton.addEventListener("click", function () {
+        cardElement.remove();
+    });
+
+    const openImg = cardElement.querySelector(".card__img");
+    openImg.addEventListener("click", function () {
+        openPopupImg(link, name);
+    });
+
+    cardsContainer.prepend(cardElement);
+}
 
 function addNewCard() {
-  initialCards.forEach(newCard);
+    initialCards.forEach(createCard);
 }
 
-function newCard({ name, link }) {
-  const cardElement = cardsTemplate
-    .querySelector(".card")
-    .cloneNode(true);
-  cardElement.querySelector(".card__name").textContent = name;
-  cardElement.querySelector(".card__img").src = link;
-  cardElement.querySelector(".card__img").alt = name;
-
- cardsContainer.prepend(cardElement);
-}
 addNewCard();
-
 
 function openPopupProfile() {
     popupProfile.classList.add("popup_opened");
@@ -83,6 +103,16 @@ function closePopupAddPlace() {
     popupAddPlace.classList.remove("popup_opened");
 }
 
+function openPopupImg(imgSrc, imgName) {
+    popupImg.classList.add("popup_opened");
+    popupImg.querySelector(".popup__img").src = imgSrc;
+    popupImg.querySelector(".popup__text").textContent = imgName;
+}
+
+function closePopupImg() {
+    popupImg.classList.remove("popup_opened");
+}
+
 //сброс input-ов в первоначальное состояние
 function initForm() {
     let name = nameElement.textContent;
@@ -90,8 +120,6 @@ function initForm() {
     nameInput.value = name;
     jobInput.value = job;
 }
-
-
 
 function formSubmitHandlerProfile(evt) {
     evt.preventDefault();
@@ -108,30 +136,20 @@ function formSubmitHandlerAddPlace(evt) {
         name: placeNameInput.value,
         link: placeLinkInput.value
     };
-    newCard(newCardAdd)
+    createCard(newCardAdd);
     closePopupAddPlace();
-}
-
-
-let likeButtons = document.querySelectorAll(".card__like-button");
-
-function clickLike(button) {
-button.classList.toggle("card__like-button_active");
-}
-
-for (let i = 0; i < likeButtons.length; i++) {
-likeButtons[i].addEventListener("click", function (event) {
-let button = event.target;
-clickLike(button);
-});
 }
 
 editButton.addEventListener("click", openPopupProfile);
 closeButtonProfile.addEventListener("click", closePopupProfile);
 formElementProfile.addEventListener("submit", formSubmitHandlerProfile);
 addButton.addEventListener("click", openPopupAddPlace);
-closeButtonAdd.addEventListener("click",closePopupAddPlace);
-formElementAddPlace.addEventListener("submit", formSubmitHandlerAddPlace)
+closeButtonAdd.addEventListener("click", closePopupAddPlace);
+formElementAddPlace.addEventListener("submit", formSubmitHandlerAddPlace);
+closeButtonImg.addEventListener("click", closePopupImg);
+
+
+
 
 
 

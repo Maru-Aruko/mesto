@@ -8,5 +8,7 @@
     align-items: center;
     justify-content: center;
     transition: visibility 0s, opacity .3s ease-in-out;
-    display: none;
+    visibility: hidden;
+    opacity: 0;
+    display: flex;
 }
