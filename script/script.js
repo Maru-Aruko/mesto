@@ -12,6 +12,7 @@ const placeNameInput = document.getElementById("placeNameInput");
 const placeLinkInput = document.getElementById("placeLinkInput");
 const popupImg = document.getElementById("popupImg");
 const closeButtonImg = document.getElementById("closeButtonImg");
+const popupAddPlaceForm = popupAddPlace.querySelector(".popup__form")
 
 const nameElement = document.getElementById("name");
 const jobElement = document.getElementById("job");
@@ -102,28 +103,11 @@ function openPopupProfile() {
     openPopup(popupProfile);
 }
 
-function closePopupProfile() {
-    closePopup(popupProfile);
-}
-
-function openPopupAddPlace() {
-    popupAddPlace.querySelector(".popup__form").reset();
-    openPopup(popupAddPlace);
-}
-
-function closePopupAddPlace() {
-    closePopup(popupAddPlace);
-}
-
 function openPopupImg(imgSrc, imgName) {
     popupImg.querySelector(".popup__img").src = imgSrc;
     popupImg.querySelector(".popup__img").alt = imgName;
     popupImg.querySelector(".popup__text").textContent = imgName;
     openPopup(popupImg);
-}
-
-function closePopupImg() {
-    closePopup(popupImg);
 }
 
 //сброс input-ов в первоначальное состояние
@@ -136,7 +120,7 @@ function formSubmitHandlerProfile(evt) {
     evt.preventDefault();
     nameElement.textContent = nameInput.value;
     jobElement.textContent = jobInput.value;
-    closePopupProfile();
+    closePopup(popupProfile);
 }
 
 function formSubmitHandlerAddPlace(evt) {
@@ -146,16 +130,17 @@ function formSubmitHandlerAddPlace(evt) {
         link: placeLinkInput.value
     };
     addCard(cardsContainer, createCard(newCardAdd));
-    closePopupAddPlace();
+    popupAddPlaceForm.reset();
+    closePopup(popupAddPlace);
 }
 
 editButton.addEventListener("click", openPopupProfile);
-closeButtonProfile.addEventListener("click", closePopupProfile);
+closeButtonProfile.addEventListener("click", () => closePopup(popupProfile));
+addButton.addEventListener("click", () => openPopup(popupAddPlace));
+closeButtonAdd.addEventListener("click", () => closePopup(popupAddPlace));
+closeButtonImg.addEventListener("click", () => closePopup(popupImg));
 formElementProfile.addEventListener("submit", formSubmitHandlerProfile);
-addButton.addEventListener("click", openPopupAddPlace);
-closeButtonAdd.addEventListener("click", closePopupAddPlace);
 formElementAddPlace.addEventListener("submit", formSubmitHandlerAddPlace);
-closeButtonImg.addEventListener("click", closePopupImg);
 
 
 
