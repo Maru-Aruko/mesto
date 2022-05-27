@@ -27,7 +27,7 @@ const hasInvalidInput = (inputList) => {
 };
 
 const setSubmitButtonState = (formElement, showSubmit) => {
-    const buttonElement = formElement.querySelector(".button__submit");
+    const buttonElement = formElement.querySelector(".button_submit");
     if (showSubmit) {
         buttonElement.classList.remove("button_inactive");
     } else {
@@ -37,7 +37,7 @@ const setSubmitButtonState = (formElement, showSubmit) => {
 
 const updateSubmitButtonState = (formElement) => {
     const inputList = Array.from(formElement.querySelectorAll(".popup__input"));
-    const buttonElement = formElement.querySelector(".button__submit");
+    const buttonElement = formElement.querySelector(".button_submit");
 
     if (hasInvalidInput(inputList)) {
         setSubmitButtonState(formElement, false);

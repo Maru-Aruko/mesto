@@ -153,8 +153,8 @@ function enablePopupCloseOnOverlayClick() {
         });
     });
 }
-
-page.addEventListener("keydown", handleEscClose);
+//В Yandex Browser не срабатывает keydown для клавиши Esc:(
+page.addEventListener("keyup", handleEscClose);
 enablePopupCloseOnOverlayClick();
 
 editButton.addEventListener("click", openPopupProfile);
