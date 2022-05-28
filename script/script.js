@@ -12,8 +12,12 @@ const placeNameInput = document.getElementById("placeNameInput");
 const placeLinkInput = document.getElementById("placeLinkInput");
 const popupImg = document.getElementById("popupImg");
 const closeButtonImg = document.getElementById("closeButtonImg");
-const popupAddPlaceForm = popupAddPlace.querySelector(".popup__form")
-const page = document.querySelector(".page")
+const popupAddPlaceForm = popupAddPlace.querySelector(".popup__form");
+const imgPopup = popupImg.querySelector(".popup__img");
+const popupImgText = popupImg.querySelector(".popup__text");
+
+let openedPopup = null;
+
 
 const nameElement = document.getElementById("name");
 const jobElement = document.getElementById("job");
@@ -22,34 +26,6 @@ const cardsContainer = document.querySelector(".cards");
 const cardsTemplate = document.querySelector("#cards").content;
 
 const popupList = Array.from(document.querySelectorAll(".popup"));
-
-
-const initialCards = [
-    {
-        name: 'Архыз',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-    },
-    {
-        name: 'Челябинская область',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-    },
-    {
-        name: 'Иваново',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-    },
-    {
-        name: 'Камчатка',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-    },
-    {
-        name: 'Холмогорский район',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-    },
-    {
-        name: 'Байкал',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-    }
-];
 
 function clickLike(button) {
     button.classList.toggle("card__like-button_active");
@@ -81,9 +57,8 @@ function createCard({name, link}) {
 }
 
 function addCard(container, cardElement) {
-    container.prepend(cardElement);
+    cardsContainer.prepend(cardElement);
 }
-
 
 function renderDefaultCards() {
     initialCards.forEach(function (cardData) {
@@ -94,11 +69,16 @@ function renderDefaultCards() {
 renderDefaultCards();
 
 function openPopup(popup) {
+    openedPopup = popup;
     popup.classList.add("popup_opened");
+    //В Yandex Browser не срабатывает keydown для клавиши Esc
+    document.addEventListener("keyup", handleEscClose);
 }
 
 function closePopup(popup) {
     popup.classList.remove("popup_opened");
+    document.removeEventListener("keyup", handleEscClose);
+    openedPopup = null;
 }
 
 function openPopupProfile() {
@@ -107,9 +87,9 @@ function openPopupProfile() {
 }
 
 function openPopupImg(imgSrc, imgName) {
-    popupImg.querySelector(".popup__img").src = imgSrc;
-    popupImg.querySelector(".popup__img").alt = imgName;
-    popupImg.querySelector(".popup__text").textContent = imgName;
+    imgPopup.src = imgSrc;
+    imgPopup.alt = imgName;
+    popupImgText.textContent = imgName;
     openPopup(popupImg);
 }
 
@@ -118,14 +98,14 @@ function initProfileForm() {
     jobInput.value = jobElement.textContent;
 }
 
-function formSubmitHandlerProfile(evt) {
+function handleProfileFormSubmit(evt) {
     evt.preventDefault();
     nameElement.textContent = nameInput.value;
     jobElement.textContent = jobInput.value;
     closePopup(popupProfile);
 }
 
-function formSubmitHandlerAddPlace(evt) {
+function handleAddCardFormSubmit(evt) {
     evt.preventDefault();
     const newCardAdd = {
         name: placeNameInput.value,
@@ -138,9 +118,7 @@ function formSubmitHandlerAddPlace(evt) {
 
 function handleEscClose(evt) {
     if (evt.key === "Escape") {
-        popupList.forEach((popupElement) => {
-            closePopup(popupElement);
-        })
+        closePopup(openedPopup);
     }
 }
 
@@ -153,8 +131,7 @@ function enablePopupCloseOnOverlayClick() {
         });
     });
 }
-//В Yandex Browser не срабатывает keydown для клавиши Esc:(
-page.addEventListener("keyup", handleEscClose);
+
 enablePopupCloseOnOverlayClick();
 
 editButton.addEventListener("click", openPopupProfile);
@@ -162,8 +139,8 @@ closeButtonProfile.addEventListener("click", () => closePopup(popupProfile));
 addButton.addEventListener("click", () => openPopup(popupAddPlace));
 closeButtonAdd.addEventListener("click", () => closePopup(popupAddPlace));
 closeButtonImg.addEventListener("click", () => closePopup(popupImg));
-formElementProfile.addEventListener("submit", formSubmitHandlerProfile);
-formElementAddPlace.addEventListener("submit", formSubmitHandlerAddPlace);
+formElementProfile.addEventListener("submit", handleProfileFormSubmit);
+formElementAddPlace.addEventListener("submit", handleAddCardFormSubmit);
 
 
 
