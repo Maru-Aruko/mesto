@@ -1,18 +1,26 @@
+import {initialCards} from "./Card.js";
+import FormValidator from "./FormValidator.js";
+
+
 const popupProfile = document.getElementById("popupProfile");
+const popupAddPlace = document.getElementById("popupAddPlace");
+
+const popupProfileForm = popupProfile.querySelector(".popup__form");
+const popupAddPlaceForm = popupAddPlace.querySelector(".popup__form");
+
 const editButton = document.getElementById("editButton");
 const closeButtonProfile = document.getElementById("closeButtonProfile");
 const formElementProfile = document.getElementById("formProfile");
 const nameInput = document.getElementById("nameInput");
 const jobInput = document.getElementById("jobInput");
 const addButton = document.getElementById("addButton");
-const popupAddPlace = document.getElementById("popupAddPlace");
 const closeButtonAdd = document.getElementById("closeButtonAdd");
 const formElementAddPlace = document.getElementById("formAddPlace");
 const placeNameInput = document.getElementById("placeNameInput");
 const placeLinkInput = document.getElementById("placeLinkInput");
 const popupImg = document.getElementById("popupImg");
 const closeButtonImg = document.getElementById("closeButtonImg");
-const popupAddPlaceForm = popupAddPlace.querySelector(".popup__form");
+
 const imgPopup = popupImg.querySelector(".popup__img");
 const popupImgText = popupImg.querySelector(".popup__text");
 
@@ -133,6 +141,30 @@ function enablePopupCloseOnOverlayClick() {
 }
 
 enablePopupCloseOnOverlayClick();
+
+const addPlacePopupValidator = new FormValidator({
+        inputSelector: '.popup__input',
+        submitButtonSelector: '.button__submit',
+        inactiveButtonClass: '.button_inactive',
+        inputErrorClass: 'popup__input_error',
+        errorClass: 'popup__input-error_active'
+    },
+    popupAddPlaceForm
+);
+
+const profilePopupValidator = new FormValidator({
+        inputSelector: '.popup__input',
+        submitButtonSelector: '.button__submit',
+        inactiveButtonClass: '.button_inactive',
+        inputErrorClass: 'popup__input_error',
+        errorClass: 'popup__input-error_active'
+    },
+    popupProfileForm
+);
+
+addPlacePopupValidator.enableValidation();
+profilePopupValidator.enableValidation();
+
 
 editButton.addEventListener("click", openPopupProfile);
 closeButtonProfile.addEventListener("click", () => closePopup(popupProfile));
