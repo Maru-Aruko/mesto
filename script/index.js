@@ -1,4 +1,5 @@
-import {initialCards} from "./Card.js";
+import {initialCards} from "./Init.js";
+import Card from "./Card.js";
 import FormValidator from "./FormValidator.js";
 
 
@@ -35,42 +36,17 @@ const cardsTemplate = document.querySelector("#cards").content;
 
 const popupList = Array.from(document.querySelectorAll(".popup"));
 
-function clickLike(button) {
-    button.classList.toggle("card__like-button_active");
-}
-
-function createCard({name, link}) {
-    const cardElement = cardsTemplate
-        .querySelector(".card")
-        .cloneNode(true);
-    cardElement.querySelector(".card__name").textContent = name;
-    cardElement.querySelector(".card__img").src = link;
-    cardElement.querySelector(".card__img").alt = name;
-
-    const likeButton = cardElement.querySelector(".card__like-button");
-    likeButton.addEventListener("click", function () {
-        clickLike(likeButton)
-    });
-
-    const deleteButton = cardElement.querySelector(".card__delete-button");
-    deleteButton.addEventListener("click", function () {
-        cardElement.remove();
-    });
-
-    const openImg = cardElement.querySelector(".card__img");
-    openImg.addEventListener("click", function () {
-        openPopupImg(link, name);
-    });
-    return cardElement;
-}
-
 function addCard(container, cardElement) {
     cardsContainer.prepend(cardElement);
 }
 
 function renderDefaultCards() {
     initialCards.forEach(function (cardData) {
-        addCard(cardsContainer, createCard(cardData));
+        const card = new Card(
+            cardData,
+            "#cards",
+            openPopupImg);
+        addCard(cardsContainer, card.createCard());
     });
 }
 
@@ -119,7 +95,11 @@ function handleAddCardFormSubmit(evt) {
         name: placeNameInput.value,
         link: placeLinkInput.value
     };
-    addCard(cardsContainer, createCard(newCardAdd));
+    const newCard = new Card(
+        newCardAdd,
+        "#cards",
+        openPopupImg);
+    addCard(cardsContainer, newCard.createCard());
     popupAddPlaceForm.reset();
     closePopup(popupAddPlace);
 }

@@ -75,12 +75,11 @@ export default class FormValidator {
         });
     };
 
-//TODO this._formElement
     enableValidation = () => {
-            this._formElement.addEventListener('submit', function (evt) {
-                this._setSubmitButtonState(this._formElement, false);
-            }.bind(this));
-            this._setEventListeners(this._formElement);
-            this._updateSubmitButtonState(this._formElement);
-        };
+        this._formElement.addEventListener('submit', function (evt) {
+            this._setSubmitButtonState(false);
+        }.bind(this));
+        this._setEventListeners();
+        this._updateSubmitButtonState();
+    };
 }
