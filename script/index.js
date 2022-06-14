@@ -32,21 +32,23 @@ const nameElement = document.getElementById("name");
 const jobElement = document.getElementById("job");
 
 const cardsContainer = document.querySelector(".cards");
-const cardsTemplate = document.querySelector("#cards").content;
 
 const popupList = Array.from(document.querySelectorAll(".popup"));
 
-function addCard(container, cardElement) {
+function addCard(cardElement) {
     cardsContainer.prepend(cardElement);
+}
+function initialClassCard(data) {
+    const card = new Card(
+        data,
+        "#cards",
+        openPopupImg);
+    return card.createCard()
 }
 
 function renderDefaultCards() {
     initialCards.forEach(function (cardData) {
-        const card = new Card(
-            cardData,
-            "#cards",
-            openPopupImg);
-        addCard(cardsContainer, card.createCard());
+        addCard(initialClassCard(cardData));
     });
 }
 
@@ -57,6 +59,8 @@ function openPopup(popup) {
     popup.classList.add("popup_opened");
     //В Yandex Browser не срабатывает keydown для клавиши Esc
     document.addEventListener("keyup", handleEscClose);
+    addPlacePopupValidator.resetErrors();
+    profilePopupValidator.resetErrors();
 }
 
 function closePopup(popup) {
@@ -95,11 +99,7 @@ function handleAddCardFormSubmit(evt) {
         name: placeNameInput.value,
         link: placeLinkInput.value
     };
-    const newCard = new Card(
-        newCardAdd,
-        "#cards",
-        openPopupImg);
-    addCard(cardsContainer, newCard.createCard());
+    addCard(initialClassCard(newCardAdd));
     popupAddPlaceForm.reset();
     closePopup(popupAddPlace);
 }
@@ -122,25 +122,16 @@ function enablePopupCloseOnOverlayClick() {
 
 enablePopupCloseOnOverlayClick();
 
-const addPlacePopupValidator = new FormValidator({
-        inputSelector: '.popup__input',
-        submitButtonSelector: '.button__submit',
-        inactiveButtonClass: '.button_inactive',
-        inputErrorClass: 'popup__input_error',
-        errorClass: 'popup__input-error_active'
-    },
-    popupAddPlaceForm
-);
+const selectors = {
+    inputSelector: '.popup__input',
+    submitButtonSelector: '.button__submit',
+    inactiveButtonClass: '.button_inactive',
+    inputErrorClass: 'popup__input_error',
+    errorClass: 'popup__input-error_active'
+}
 
-const profilePopupValidator = new FormValidator({
-        inputSelector: '.popup__input',
-        submitButtonSelector: '.button__submit',
-        inactiveButtonClass: '.button_inactive',
-        inputErrorClass: 'popup__input_error',
-        errorClass: 'popup__input-error_active'
-    },
-    popupProfileForm
-);
+const addPlacePopupValidator = new FormValidator(selectors, popupAddPlaceForm);
+const profilePopupValidator = new FormValidator(selectors, popupProfileForm);
 
 addPlacePopupValidator.enableValidation();
 profilePopupValidator.enableValidation();

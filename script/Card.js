@@ -41,6 +41,7 @@ export default class Card {
 
     _removeCard() {
         this._cardElement.remove();
+        this._cardElement = null;
     }
 
     _toggleLikeButton() {
