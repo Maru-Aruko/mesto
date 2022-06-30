@@ -1,126 +1,83 @@
 import {initialCards} from "./Init.js";
 import Card from "./Card.js";
 import FormValidator from "./FormValidator.js";
+import PopupWithImage from "./PopupWithImage.js";
+import PopupWithForm from "./PopupWithForm.js";
+import UserInfo from "./UserInfo.js";
+import Section from "./Section.js";
 
+const popupProfileSelector = document.getElementById("popupProfile");
+const popupAddPlaceSelector = document.getElementById("popupAddPlace");
 
-const popupProfile = document.getElementById("popupProfile");
-const popupAddPlace = document.getElementById("popupAddPlace");
-
-const popupProfileForm = popupProfile.querySelector(".popup__form");
-const popupAddPlaceForm = popupAddPlace.querySelector(".popup__form");
+const popupProfileForm = popupProfileSelector.querySelector(".popup__form");
+const popupAddPlaceForm = popupAddPlaceSelector.querySelector(".popup__form");
 
 const editButton = document.getElementById("editButton");
-const closeButtonProfile = document.getElementById("closeButtonProfile");
-const formElementProfile = document.getElementById("formProfile");
 const nameInput = document.getElementById("nameInput");
 const jobInput = document.getElementById("jobInput");
 const addButton = document.getElementById("addButton");
-const closeButtonAdd = document.getElementById("closeButtonAdd");
-const formElementAddPlace = document.getElementById("formAddPlace");
-const placeNameInput = document.getElementById("placeNameInput");
-const placeLinkInput = document.getElementById("placeLinkInput");
-const popupImg = document.getElementById("popupImg");
-const closeButtonImg = document.getElementById("closeButtonImg");
-
-const imgPopup = popupImg.querySelector(".popup__img");
-const popupImgText = popupImg.querySelector(".popup__text");
-
-let openedPopup = null;
-
 
 const nameElement = document.getElementById("name");
 const jobElement = document.getElementById("job");
 
-const cardsContainer = document.querySelector(".cards");
 
-const popupList = Array.from(document.querySelectorAll(".popup"));
+const popupWithImage = new PopupWithImage(".popup_img-bg");
+popupWithImage.setEventListener();
 
-function addCard(cardElement) {
-    cardsContainer.prepend(cardElement);
-}
 function initialClassCard(data) {
     const card = new Card(
         data,
         "#cards",
-        openPopupImg);
-    return card.createCard()
+        () => popupWithImage.open(data.link, data.name));
+    return card.createCard();
 }
 
-function renderDefaultCards() {
-    initialCards.forEach(function (cardData) {
-        addCard(initialClassCard(cardData));
-    });
-}
+const cards = new Section({
+    item: initialCards,
+    renderer: (item) => {
+        const cardItem = initialClassCard(item);
+        cards.addItem(cardItem);
+    },
+}, ".cards");
+cards.renderElement();
 
-renderDefaultCards();
 
-function openPopup(popup) {
-    openedPopup = popup;
-    popup.classList.add("popup_opened");
-    //В Yandex Browser не срабатывает keydown для клавиши Esc
-    document.addEventListener("keyup", handleEscClose);
-    addPlacePopupValidator.resetErrors();
-    profilePopupValidator.resetErrors();
-}
+const userInfo = new UserInfo({profileName: ".profile__name", profileInfo: ".profile__job"});
 
-function closePopup(popup) {
-    popup.classList.remove("popup_opened");
-    document.removeEventListener("keyup", handleEscClose);
-    openedPopup = null;
-}
+const popupEditProfile = new PopupWithForm("#popupProfile", (formData) => {
+    userInfo.setUserInfo({newUserName: formData["name-input"], newUserInfo: formData["job-input"]});
+    popupEditProfile.close();
+});
+popupEditProfile.setEventListener();
 
-function openPopupProfile() {
+editButton.addEventListener("click", () => {
+    const userInfoData = userInfo.getUserInfo();
+    nameInput.value = userInfoData.name;
+    jobInput.value = userInfoData.info;
     initProfileForm();
-    openPopup(popupProfile);
-}
+    profilePopupValidator.resetErrors();
+    popupEditProfile.open();
 
-function openPopupImg(imgSrc, imgName) {
-    imgPopup.src = imgSrc;
-    imgPopup.alt = imgName;
-    popupImgText.textContent = imgName;
-    openPopup(popupImg);
-}
+});
+
+const popupAddPlace = new PopupWithForm("#popupAddPlace", (formData) => {
+
+    const item = {name: formData["place-name"], link: formData["place-link"]};
+    const card = initialClassCard(item);
+    cards.addItem(card);
+    popupAddPlace.close();
+});
+popupAddPlace.setEventListener();
+
+addButton.addEventListener("click", () => {
+    addPlacePopupValidator.resetErrors();
+    popupAddPlace.open();
+})
 
 function initProfileForm() {
     nameInput.value = nameElement.textContent;
     jobInput.value = jobElement.textContent;
 }
-
-function handleProfileFormSubmit(evt) {
-    evt.preventDefault();
-    nameElement.textContent = nameInput.value;
-    jobElement.textContent = jobInput.value;
-    closePopup(popupProfile);
-}
-
-function handleAddCardFormSubmit(evt) {
-    evt.preventDefault();
-    const newCardAdd = {
-        name: placeNameInput.value,
-        link: placeLinkInput.value
-    };
-    addCard(initialClassCard(newCardAdd));
-    popupAddPlaceForm.reset();
-    closePopup(popupAddPlace);
-}
-
-function handleEscClose(evt) {
-    if (evt.key === "Escape") {
-        closePopup(openedPopup);
-    }
-}
-
-function enablePopupCloseOnOverlayClick() {
-    popupList.forEach((popupElement) => {
-        popupElement.addEventListener("click", (evt) => {
-            if (evt.target === popupElement) {
-                closePopup(popupElement);
-            }
-        });
-    });
-}
-
-enablePopupCloseOnOverlayClick();
 
 const selectors = {
     inputSelector: '.popup__input',
@@ -135,16 +92,6 @@ const profilePopupValidator = new FormValidator(selectors, popupProfileForm);
 
 addPlacePopupValidator.enableValidation();
 profilePopupValidator.enableValidation();
-
-
-editButton.addEventListener("click", openPopupProfile);
-closeButtonProfile.addEventListener("click", () => closePopup(popupProfile));
-addButton.addEventListener("click", () => openPopup(popupAddPlace));
-closeButtonAdd.addEventListener("click", () => closePopup(popupAddPlace));
-closeButtonImg.addEventListener("click", () => closePopup(popupImg));
-formElementProfile.addEventListener("submit", handleProfileFormSubmit);
-formElementAddPlace.addEventListener("submit", handleAddCardFormSubmit);
-
 
 
 
