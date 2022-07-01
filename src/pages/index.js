@@ -1,26 +1,12 @@
-import {initialCards} from "./Init.js";
-import Card from "./Card.js";
-import "../pages/index.css";
-import FormValidator from "./FormValidator.js";
-import PopupWithImage from "./PopupWithImage.js";
-import PopupWithForm from "./PopupWithForm.js";
-import UserInfo from "./UserInfo.js";
-import Section from "./Section.js";
-
-const popupProfileSelector = document.getElementById("popupProfile");
-const popupAddPlaceSelector = document.getElementById("popupAddPlace");
-
-const popupProfileForm = popupProfileSelector.querySelector(".popup__form");
-const popupAddPlaceForm = popupAddPlaceSelector.querySelector(".popup__form");
-
-const editButton = document.getElementById("editButton");
-const nameInput = document.getElementById("nameInput");
-const jobInput = document.getElementById("jobInput");
-const addButton = document.getElementById("addButton");
-
-const nameElement = document.getElementById("name");
-const jobElement = document.getElementById("job");
-
+import {initialCards} from "../components/Init.js";
+import Card from "../components/Card.js";
+import "./index.css";
+import FormValidator from "../components/FormValidator.js";
+import PopupWithImage from "../components/PopupWithImage.js";
+import PopupWithForm from "../components/PopupWithForm.js";
+import UserInfo from "../components/UserInfo.js";
+import Section from "../components/Section.js";
+import {selectors, popupProfileSelector, popupAddPlaceSelector, popupProfileForm, popupAddPlaceForm, editButton, nameInput,jobInput,addButton, nameElement, jobElement} from "../../utils/constants";
 
 const popupWithImage = new PopupWithImage(".popup_img-bg");
 popupWithImage.setEventListener();
@@ -53,9 +39,7 @@ popupEditProfile.setEventListener();
 
 editButton.addEventListener("click", () => {
     const userInfoData = userInfo.getUserInfo();
-    nameInput.value = userInfoData.name;
-    jobInput.value = userInfoData.info;
-    initProfileForm();
+    initProfileForm(userInfoData);
     profilePopupValidator.resetErrors();
     popupEditProfile.open();
 
@@ -78,14 +62,6 @@ addButton.addEventListener("click", () => {
 function initProfileForm() {
     nameInput.value = nameElement.textContent;
     jobInput.value = jobElement.textContent;
-}
-
-const selectors = {
-    inputSelector: '.popup__input',
-    submitButtonSelector: '.button__submit',
-    inactiveButtonClass: '.button_inactive',
-    inputErrorClass: 'popup__input_error',
-    errorClass: 'popup__input-error_active'
 }
 
 const addPlacePopupValidator = new FormValidator(selectors, popupAddPlaceForm);
