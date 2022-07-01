@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Mesto</title>
-    <link rel="stylesheet" href="pages/index.css">
 </head>
 <body class="page">
 <header class="header">
@@ -12,7 +11,7 @@
 </header>
 <main class="page__content">
     <section class="profile">
-        <img class="profile__avatar" src="././images/Avatar.png" alt="Аватар профиля">
+        <img class="profile__avatar" src="<%=require('./images/Avatar.png')%>" alt="Аватар профиля">
         <div class="profile__info">
             <h1 class="profile__name" id="name">Жак-Ив Кусто</h1>
             <button class="profile__edit-button button" type="button" id="editButton"></button>
@@ -81,8 +80,5 @@
 <footer class="footer">
     <p class="footer__copyright">&copy; 2022 Mesto Russia</p>
 </footer>
-
-<script type="module" src="script/index.js"></script>
-
 </body>
 </html>
