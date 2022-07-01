@@ -6,7 +6,7 @@ import PopupWithImage from "../components/PopupWithImage.js";
 import PopupWithForm from "../components/PopupWithForm.js";
 import UserInfo from "../components/UserInfo.js";
 import Section from "../components/Section.js";
-import {selectors, popupProfileSelector, popupAddPlaceSelector, popupProfileForm, popupAddPlaceForm, editButton, nameInput,jobInput,addButton, nameElement, jobElement} from "../../utils/constants";
+import {selectors, popupProfileSelector, popupAddPlaceSelector, popupProfileForm, popupAddPlaceForm, editButton, nameInput,jobInput,addButton, nameElement, jobElement} from "../utils/constants";
 
 const popupWithImage = new PopupWithImage(".popup_img-bg");
 popupWithImage.setEventListener();
