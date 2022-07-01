@@ -59,9 +59,9 @@ addButton.addEventListener("click", () => {
     popupAddPlace.open();
 })
 
-function initProfileForm() {
-    nameInput.value = nameElement.textContent;
-    jobInput.value = jobElement.textContent;
+function initProfileForm(data) {
+    nameInput.value = data.name;
+    jobInput.value = data.info;
 }
 
 const addPlacePopupValidator = new FormValidator(selectors, popupAddPlaceForm);
