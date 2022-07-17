@@ -11,7 +11,10 @@
 </header>
 <main class="page__content">
     <section class="profile">
-        <img class="profile__avatar" src="<%=require('./images/Avatar.png')%>" alt="Аватар профиля">
+        <div class="profile__avatar">
+            <img class="profile__avatar-img" src="<%=require('./images/Avatar.png')%>" alt="Аватар профиля">
+            <div class="profile__avatar-overlay"></div>
+        </div>
         <div class="profile__info">
             <h1 class="profile__name" id="name">Жак-Ив Кусто</h1>
             <button class="profile__edit-button button" type="button" id="editButton"></button>
@@ -23,11 +26,13 @@
     <template id="cards">
         <figure class="card">
             <img class="card__img" id="cardImg">
-            <button class="card__delete-button button" type="button"></button>
+            <button class="card__delete-button card__delete-button_hide button" id="deleteButton"
+                    type="button"></button>
             <figcaption class="card__text">
                 <h3 class="card__name" id="cardName"></h3>
                 <button class="card__like-button button" type="button"></button>
             </figcaption>
+            <p class="card__like-counter">0</p>
         </figure>
     </template>
 </main>
@@ -75,6 +80,29 @@
         <button class="popup__close-button button" id="closeButtonImg" type="button"></button>
         <img class="popup__img">
         <p class="popup__text"></p>
+    </div>
+</div>
+<div class="popup" id="popupConfirm">
+    <div class="popup__container" id="formConfirm">
+        <button class="popup__close-button button" id="closeButtonConfirm" type="button"></button>
+        <form class="popup__form" name="popup__form" novalidate>
+            <h2 class="popup__confirm-title">Вы уверены?</h2>
+            <button class="popup__confirm-button button button_submit" type="submit">Да</button>
+        </form>
+    </div>
+</div>
+<div class="popup" id="popupEditAvatar">
+    <div class="popup__container" id="formEditAvatar">
+        <button class="popup__close-button button" id="closeButtonEditAvatar" type="button"></button>
+        <form class="popup__form" name="popup__form" novalidate>
+            <h2 class="popup__title">Обновить аватар</h2>
+            <label class="popup__field">
+                <input class="popup__input" id="avatarEditInput" name="avatar" type="url"
+                       placeholder="Ссылка на аватар" value="" required>
+                <span class="popup__input-error avatarEditInputError"></span>
+            </label>
+            <button class="popup__edit-button button button_submit button_inactive" type="submit">Сохранить</button>
+        </form>
     </div>
 </div>
 <footer class="footer">
