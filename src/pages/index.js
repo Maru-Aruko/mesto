@@ -55,7 +55,7 @@ function initialClassCard(data) {
             popupConfirm.setSubmitAction(() => {
                 api.removeCard(id)
                     .then(() => {
-                        card._removeCard();
+                        card.removeCard();
                         popupConfirm.close();
                     })
                     .catch((err) => {

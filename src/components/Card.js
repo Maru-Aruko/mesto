@@ -79,7 +79,7 @@ export default class Card {
         this._handleCardClick(this._link, this._name);
     }
 
-    _removeCard() {
+    removeCard() {
         this._cardElement.remove();
         this._cardElement = null;
     }
